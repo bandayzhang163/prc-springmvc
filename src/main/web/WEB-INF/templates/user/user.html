@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>here is user page</h2>
+
+<h3>Data Lists</h3>
+<div th:if="${not #lists.isEmpty(data)}">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Created Time</th>
+            <th>Format Time</th>
+        </tr>
+        <tr th:each="user : ${data}">
+            <td th:text="${user.id}">Onions</td>
+            <td th:text="${user.name}">2.41</td>
+            <td th:text="${user.createdTime}">2.41</td>
+            <!--<td th:text="${#temporals.format(user.createdTime,'yyyy/MM/dd HH:mm:ss')}">{{}}</td>-->
+            <td><a th:href="@{/user/delete/}+${user.id}">delete</a></td>
+        </tr>
+    </table>
+</div>
+<p th:unless="${not #lists.isEmpty(data)}">还没有数据</p>
+
+<h3>Func</h3>
+add:
+<form action="/user/add" method="post">
+    name:<input name="name" type="text"/>
+    <input type="submit"/>
+</form>
+update:
+<form action="/user/update" method="post">
+    id:<input name="id" type="text"/>
+    name:<input name="name" type="text"/>
+    <input type="submit"/>
+</form>
+
+<h3>Operation console</h3>
+<p th:text="${msg}"></p>
+
+</body>
+</html>

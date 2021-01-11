@@ -16,77 +16,78 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-public class UserController {
+@RequestMapping("test")
+public class TestUserController {
     @Autowired
     UserService userService;
 
     /**
-     * 用户列表
+     * 返回自定义结果
      * @return
      */
     @GetMapping("user")
-    public String listUser(Model model){
+    @ResponseBody
+    public R listUser(){
         List<User> users = userService.listUser();
-        model.addAttribute("data",users);
-        return "user/user";
+        System.out.println(users);
+        return R.ok(users);
     }
 
-
     /**
-     * 用户详情
+     * 返回ResponseEntity
      * @param id
      * @return
      */
     @GetMapping("user/{id}")
-    public String getUser(@PathVariable int id,Model model){
+    @ResponseBody
+    public ResponseEntity<User> getUser(@PathVariable int id){
         User user = userService.getUser(id);
-        model.addAttribute("data",user);
-        return "user/user";
+        return ResponseEntity.ok(user);
     }
 
     /**
-     * 添加用户
+     * 返回成功页面
      * @param user
      * @return
      */
-    @PostMapping("user/add")
+    @PostMapping("user")
     public String add(User user, Model model){
         int add = userService.add(user);
         model.addAttribute("msg","add "+add+" records");
-
-        List<User> users = userService.listUser();
-        model.addAttribute("data",users);
-        return "user/user";
+        return "success";
     }
 
     /**
-     * 删除用户
+     * 返回ModelAndView
      * @param id
      * @return
      */
 //    @DeleteMapping("user/delete/{id}")
     @GetMapping("user/delete/{id}")
-    public String delete(@PathVariable int id,Model model){
+    public ModelAndView delete(@RequestBody @PathVariable int id){
         int delete = userService.delete(id);
-        model.addAttribute("msg","delete "+delete+" records");
-
-        List<User> users = userService.listUser();
-        model.addAttribute("data",users);
-        return "user/user";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("msg","delete "+delete+" records");
+        modelAndView.setViewName("success");
+        return modelAndView;
     }
 
     /**
-     * 更新用户
+     * 返回void
      * @param user
      * @return
      */
-    @PostMapping("user/update")
-    public String update(User user, Model model){
+    @PutMapping("user")
+    public void update(User user, HttpServletRequest request, HttpServletResponse response){
         int update = userService.update(user);
-        model.addAttribute("msg","update "+update+" records");
+        System.out.println("update "+update+" records");
+        try {
+//            request.getRequestDispatcher("test").forward(request,response);
+            response.sendRedirect("test");
 
-        List<User> users = userService.listUser();
-        model.addAttribute("data",users);
-        return "user/user";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
