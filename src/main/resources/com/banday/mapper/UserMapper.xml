@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banday.mapper.UserMapper">
+    <select id="listUser" resultType="com.banday.pojo.User">
+        select * from user;
+    </select>
+    <select id="getUser" resultType="com.banday.pojo.User">
+        select * from user where id=#{id}
+    </select>
+    <insert id="add" parameterType="com.banday.pojo.User">
+        insert into user(id,name,created_time,updated_time)
+        values(#{id},#{name},now(),#{updatedTime});
+    </insert>
+    <update id="update" parameterType="com.banday.pojo.User">
+        update user set name=#{name},updated_time=now() where id=#{id};
+    </update>
+    <delete id="delete">
+        delete from user where id=#{id};
+    </delete>
+</mapper>
