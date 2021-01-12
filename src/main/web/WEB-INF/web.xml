@@ -21,6 +21,13 @@
         </init-param>
         <!--启动级别-->
         <load-on-startup>1</load-on-startup>
+
+        <!--文件上传-->
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <!--/是只配所有请求，不会匹配jsp-->
     <!--/*包括jsp页面-->
@@ -28,4 +35,6 @@
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
 </web-app>
