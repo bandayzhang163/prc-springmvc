@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.banday.mapper.ImageMapper">
+    <select id="listImage" resultType="com.banday.pojo.Image">
+        select * from image where is_delete=0;
+    </select>
+    <select id="getImage" resultType="com.banday.pojo.Image">
+        select * from image where id=#{id} and is_delete=0;
+    </select>
+    <insert id="add" parameterType="com.banday.pojo.Image">
+        insert into image(url,created_time)
+        values(#{url},now());
+    </insert>
+    <update id="update" parameterType="com.banday.pojo.Image">
+        update image set url=#{url},updated_time=now() where id=#{id} and is_delete=0;
+    </update>
+    <delete id="delete">
+        delete from image where id=#{id} and is_delete=0;
+    </delete>
+</mapper>
